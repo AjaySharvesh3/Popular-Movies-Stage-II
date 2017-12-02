@@ -5,8 +5,11 @@
 Submission for Android NanoDegree Project
 
 ## Contents
-**#1 [Movie Feast](https://github.com/SyamSundarKirubakaran/AndroidWorks/tree/master/PosterGrid)** 
+**#1 [Movie Feast](https://github.com/SyamSundarKirubakaran/Popular-Movies-Stage-I)** 
 - Nano Degree Submission - Popular Movies Stage I 
+
+## Preliminary works
+- Check out my [AndroidWorks](https://github.com/SyamSundarKirubakaran/AndroidWorks) Repository to find out how I learnt step by step to accomplish this result.
 
 ## 1. Movie Feast:
 An app that uses the [Movies.db API](https://www.themoviedb.org/?language=en) to find the popular movies and Top rated movies in realtime and inflate the activities with the data of those movies accordingly. <br />
@@ -21,8 +24,10 @@ An app that uses the [Movies.db API](https://www.themoviedb.org/?language=en) to
 
 **Popular movies in the form of JSON:** <br />
 <br />
+- Popular Movies:
 `https://api.themoviedb.org/3/movie/popular?api_key= <<YOUR_API_KEY>> ` <br />
 <br />
+- Top Rated Movies:
 `https://api.themoviedb.org/3/movie/top_rated?api_key= <<YOUR_API_KEY>> ` <br />
 <br />
 **Note:**<br />
