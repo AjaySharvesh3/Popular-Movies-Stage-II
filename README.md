@@ -24,15 +24,12 @@ An app that uses the [Movies.db API](https://www.themoviedb.org/?language=en) to
 
 **Popular movies in the form of JSON:** <br />
 <br />
-- Popular Movies:
 `https://api.themoviedb.org/3/movie/popular?api_key= <<YOUR_API_KEY>> ` <br />
 <br />
-- Top Rated Movies:
 `https://api.themoviedb.org/3/movie/top_rated?api_key= <<YOUR_API_KEY>> ` <br />
 <br />
 **Note:**<br />
-Get your API key and place it in the strings.xml file in the resource directory.<br />
-(NOTE: Marked as TODO in strings.xml file)<br />
+Get your API key and place it in the strings.xml file in the resource directory.(NOTE: Marked as TODO in strings.xml file)<br />
 ``` xml
 <string name="API_Key">Your API Key</string>
 ```
