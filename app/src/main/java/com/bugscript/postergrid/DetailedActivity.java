@@ -1,6 +1,7 @@
 package com.bugscript.postergrid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -10,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -38,14 +40,6 @@ public class DetailedActivity extends AppCompatActivity {
     public static String[] content=new String[100];
     private int flag=0;
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id=item.getItemId();
-        if(id==android.R.id.home){
-            NavUtils.navigateUpFromSameTask(this);
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,5 +173,30 @@ public class DetailedActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_detailed, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id=item.getItemId();
+        if(id==android.R.id.home){
+            NavUtils.navigateUpFromSameTask(this);
+        }else if(id==R.id.action_settings){
+            Intent i=new Intent(Intent.ACTION_SEND);
+            i.setType("text/plain");
+            String shareBody=MainActivity.summary[intGotPosition];
+            String shareSub=MainActivity.movies[intGotPosition];
+            i.putExtra(Intent.EXTRA_SUBJECT,shareSub);
+            i.putExtra(Intent.EXTRA_TEXT,shareBody);
+            startActivity(Intent.createChooser(i,"Share with:"));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }
