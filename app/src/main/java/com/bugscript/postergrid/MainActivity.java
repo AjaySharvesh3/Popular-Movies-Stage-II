@@ -5,8 +5,10 @@ import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -60,9 +62,6 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_up_coming:
                     MOVIE_URL="https://api.themoviedb.org/3/movie/upcoming?api_key="+getResources().getString(R.string.API_key);
                     doFunctionGrid();
-                    return true;
-                case R.id.navigation_favorite:
-                    Toast.makeText(MainActivity.this,"Yet to be implemented..",Toast.LENGTH_LONG).show();
                     return true;
             }
             return false;
@@ -152,4 +151,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id=item.getItemId();
+        if(id==R.id.fav_list){
+            Toast.makeText(MainActivity.this,"Favorites list will be added soon..",Toast.LENGTH_LONG).show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
