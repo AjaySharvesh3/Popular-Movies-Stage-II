@@ -45,9 +45,7 @@ public class DetailedActivity extends AppCompatActivity {
     public static String[] content=new String[100];
     public static String key=null;
     private int flag=0;
-    public static int increment_click=0;
-    public static ContentResolver contentResolver;
-    public static MoviesDB mdb;
+    public static MoviesDB mdb = new MoviesDB();
 
 
 
@@ -64,8 +62,8 @@ public class DetailedActivity extends AppCompatActivity {
         movieSummary= findViewById(R.id.movieSummaryValue);
         imageViewInDetailsPoster= findViewById(R.id.imageViewPosterDetails);
         movieReview= findViewById(R.id.movieReviewValue);
-        final FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab1);
-        final FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab2 = findViewById(R.id.fab1);
+        final FloatingActionButton fab1 = findViewById(R.id.fab);
 
 
         String gotPosition=getIntent().getStringExtra("position");
@@ -85,10 +83,8 @@ public class DetailedActivity extends AppCompatActivity {
 
 
 
-        contentResolver = DetailedActivity.this.getContentResolver();
-        mdb = new MoviesDB();
         int idIntValue=Integer.parseInt(MainActivity.id[intGotPosition]);
-        if(mdb.isMovieFavorited(contentResolver, idIntValue)){
+        if(mdb.isMovieFavorited(MainActivity.contentResolver, idIntValue)){
             fab2.setImageDrawable(ContextCompat.getDrawable(DetailedActivity.this,R.drawable.ic_favorite_white_24px));
         }else{
             fab2.setImageDrawable(ContextCompat.getDrawable(DetailedActivity.this,R.drawable.ic_favorite_border_white_24px));
@@ -124,15 +120,16 @@ public class DetailedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int idIntValue=Integer.parseInt(MainActivity.id[intGotPosition]);
-                if(mdb.isMovieFavorited(contentResolver, idIntValue)){
-                    mdb.removeMovie(contentResolver, idIntValue);
+                if(mdb.isMovieFavorited(MainActivity.contentResolver, idIntValue)){
+                    mdb.removeMovie(MainActivity.contentResolver, idIntValue);
                     fab2.setImageDrawable(ContextCompat.getDrawable(DetailedActivity.this,R.drawable.ic_favorite_border_white_24px));
                     Snackbar.make(view, "Removed from Favorites", Snackbar.LENGTH_SHORT).show();
                 }else{
-                    mdb.addMovie(contentResolver, intGotPosition);
+                    mdb.addMovie(MainActivity.contentResolver, intGotPosition);
                     fab2.setImageDrawable(ContextCompat.getDrawable(DetailedActivity.this,R.drawable.ic_favorite_white_24px));
                     Snackbar.make(view, "Added to Favorites", Snackbar.LENGTH_SHORT).show();
                 }
+                mdb.getFavoriteMovies(MainActivity.contentResolver);
             }
         });
 
