@@ -42,7 +42,7 @@ Get your API key and place it in the strings.xml file in the resource directory.
 ``` xml
 <string name="API_Key">Your API Key</string>
 ```
-## Show case:
+**Show case:**<br />
 <img src="assert/popular.png" height=480 width =270 />
 <img src="assert/top_rated.png" height=480 width =270 />
 <img src="assert/now_playing.png" height=480 width =270 />
@@ -54,7 +54,7 @@ Get your API key and place it in the strings.xml file in the resource directory.
 <img src="assert/add_fav.png" height=480 width =270 />
 <img src="assert/fav.png" height=480 width =270 />
 <img src="assert/rem_fav.png" height=480 width =270 /><br />
-## In absence of Network:
+**In absence of Network:**<br />
 <img src="assert/no_network.png" height=480 width =270 />
 <img src="assert/fav_full.png" height=480 width =270 />
 
