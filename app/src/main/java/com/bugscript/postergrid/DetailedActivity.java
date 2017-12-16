@@ -1,5 +1,6 @@
 package com.bugscript.postergrid;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -44,7 +45,8 @@ public class DetailedActivity extends AppCompatActivity {
     public static String[] content=new String[100];
     public static String key=null;
     private int flag=0;
-    public static int increment_click=0;
+    public static MoviesDB mdb = new MoviesDB();
+
 
 
     @Override
@@ -60,6 +62,8 @@ public class DetailedActivity extends AppCompatActivity {
         movieSummary= findViewById(R.id.movieSummaryValue);
         imageViewInDetailsPoster= findViewById(R.id.imageViewPosterDetails);
         movieReview= findViewById(R.id.movieReviewValue);
+        final FloatingActionButton fab2 = findViewById(R.id.fab1);
+        final FloatingActionButton fab1 = findViewById(R.id.fab);
 
 
         String gotPosition=getIntent().getStringExtra("position");
@@ -79,6 +83,16 @@ public class DetailedActivity extends AppCompatActivity {
 
 
 
+        int idIntValue=Integer.parseInt(MainActivity.id[intGotPosition]);
+        if(mdb.isMovieFavorited(MainActivity.contentResolver, idIntValue)){
+            fab2.setImageDrawable(ContextCompat.getDrawable(DetailedActivity.this,R.drawable.ic_favorite_white_24px));
+        }else{
+            fab2.setImageDrawable(ContextCompat.getDrawable(DetailedActivity.this,R.drawable.ic_favorite_border_white_24px));
+        }
+
+
+
+
         ImageView toolbarImage =  findViewById(R.id.image_id);
 
         String url = "https://image.tmdb.org/t/p/w1280"+MainActivity.backdrop[intGotPosition];
@@ -93,7 +107,7 @@ public class DetailedActivity extends AppCompatActivity {
                 .into(imageViewInDetailsPoster);
         imageViewInDetailsPoster.setVisibility(View.VISIBLE);
 
-        final FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab);
+
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,22 +115,21 @@ public class DetailedActivity extends AppCompatActivity {
             }
         });
 
-        final FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab1);
+
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Favorites list Altered", Snackbar.LENGTH_LONG)
-                        .setAction("View", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if(increment_click%2==0){
-                                    fab2.setImageDrawable(ContextCompat.getDrawable(DetailedActivity.this,R.drawable.ic_favorite_border_white_24px));
-                                }else{
-                                    fab2.setImageDrawable(ContextCompat.getDrawable(DetailedActivity.this,R.drawable.ic_favorite_white_24px));
-                                }
-                                increment_click+=1;
-                            }
-                        }).show();
+                int idIntValue=Integer.parseInt(MainActivity.id[intGotPosition]);
+                if(mdb.isMovieFavorited(MainActivity.contentResolver, idIntValue)){
+                    mdb.removeMovie(MainActivity.contentResolver, idIntValue);
+                    fab2.setImageDrawable(ContextCompat.getDrawable(DetailedActivity.this,R.drawable.ic_favorite_border_white_24px));
+                    Snackbar.make(view, "Removed from Favorites", Snackbar.LENGTH_SHORT).show();
+                }else{
+                    mdb.addMovie(MainActivity.contentResolver, intGotPosition);
+                    fab2.setImageDrawable(ContextCompat.getDrawable(DetailedActivity.this,R.drawable.ic_favorite_white_24px));
+                    Snackbar.make(view, "Added to Favorites", Snackbar.LENGTH_SHORT).show();
+                }
+                mdb.getFavoriteMovies(MainActivity.contentResolver);
             }
         });
 
