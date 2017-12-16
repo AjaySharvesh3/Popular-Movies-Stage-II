@@ -1,7 +1,11 @@
 package com.bugscript.postergrid;
 
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -35,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
     public static String[] backdrop;
     public static String[] id;
     private String MOVIE_URL;
-    private String API_KEY;
     private URL url;
     private ProgressBar progressBar;
     private GridView gridview;
+    public static ContentResolver contentResolver;
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -73,16 +77,31 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView navigation =  findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        progressBar= findViewById(R.id.progressbar);
-        MOVIE_URL="https://api.themoviedb.org/3/movie/popular?api_key="+getResources().getString(R.string.API_key);
-        doFunctionGrid();
+        progressBar = findViewById(R.id.progressbar);
+        contentResolver = MainActivity.this.getContentResolver();
+        DetailedActivity.mdb.getFavoriteMovies(contentResolver);
+
+        if(isNetworkAvailable()) {
+            MOVIE_URL = "https://api.themoviedb.org/3/movie/popular?api_key=" + getResources().getString(R.string.API_key);
+            doFunctionGrid();
+        }else {
+            Toast.makeText(MainActivity.this,"Network Error..",Toast.LENGTH_LONG).show();
+        }
     }
 
     public void doFunctionGrid(){
@@ -138,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             progressBar.setVisibility(View.INVISIBLE);
-            gridview = (GridView) findViewById(R.id.gridview);
+            gridview = findViewById(R.id.gridview);
             int orientation = getResources().getConfiguration().orientation;
             gridview.setNumColumns(orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2);
             gridview.setAdapter(new PosterAdapter(MainActivity.this));
@@ -165,7 +184,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
         if(id==R.id.fav_list){
-            Toast.makeText(MainActivity.this,"Favorites list will be added soon..",Toast.LENGTH_LONG).show();
+            Intent i=new Intent(MainActivity.this,FavoriteActivity.class);
+            startActivity(i);
         }
         return super.onOptionsItemSelected(item);
     }
