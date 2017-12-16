@@ -27,6 +27,14 @@
             android:parentActivityName=".MainActivity">
 
         </activity>
+
+        <provider
+            android:name=".data.MovieProvider"
+            android:authorities="com.bugscript.postergrid"
+            android:enabled="true"
+            android:exported="true">
+        </provider>
+
     </application>
 
 </manifest>
