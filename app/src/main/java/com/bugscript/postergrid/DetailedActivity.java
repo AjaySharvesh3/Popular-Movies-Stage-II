@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -43,6 +44,7 @@ public class DetailedActivity extends AppCompatActivity {
     public static String[] content=new String[100];
     public static String key=null;
     private int flag=0;
+    public static int increment_click=0;
 
 
     @Override
@@ -91,21 +93,15 @@ public class DetailedActivity extends AppCompatActivity {
                 .into(imageViewInDetailsPoster);
         imageViewInDetailsPoster.setVisibility(View.VISIBLE);
 
-        FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab);
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Play in YouTube", Snackbar.LENGTH_LONG)
-                        .setAction("Yes", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v="+key)));
-                            }
-                        }).show();
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v="+key)));
             }
         });
 
-        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab1);
+        final FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab1);
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,7 +109,12 @@ public class DetailedActivity extends AppCompatActivity {
                         .setAction("View", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Toast.makeText(DetailedActivity.this,"Movie added to Favorites..",Toast.LENGTH_LONG).show();
+                                if(increment_click%2==0){
+                                    fab2.setImageDrawable(ContextCompat.getDrawable(DetailedActivity.this,R.drawable.ic_favorite_border_white_24px));
+                                }else{
+                                    fab2.setImageDrawable(ContextCompat.getDrawable(DetailedActivity.this,R.drawable.ic_favorite_white_24px));
+                                }
+                                increment_click+=1;
                             }
                         }).show();
             }
@@ -192,7 +193,7 @@ public class DetailedActivity extends AppCompatActivity {
             }else {
                 String temp="";
                 for(int i=0;i<totalLenght;i++){
-                    temp=temp+"Author: "+authors[i]+"\nReview: "+content[i]+"\n"+"-------------------------------"+"\n";
+                    temp=temp+"\t\tAuthor: "+authors[i]+"\n\t\tReview: "+content[i]+"\n"+"-------------------------------"+"\n";
                 }
                 movieReview.setText(temp+"");
             }

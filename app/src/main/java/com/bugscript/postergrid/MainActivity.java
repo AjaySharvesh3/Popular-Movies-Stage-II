@@ -48,18 +48,22 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_popular:
+                    progressBar.setVisibility(View.VISIBLE);
                     MOVIE_URL="https://api.themoviedb.org/3/movie/popular?api_key="+getResources().getString(R.string.API_key);
                     doFunctionGrid();
                     return true;
                 case R.id.navigation_top_rated:
+                    progressBar.setVisibility(View.VISIBLE);
                     MOVIE_URL="https://api.themoviedb.org/3/movie/top_rated?api_key="+getResources().getString(R.string.API_key);
                     doFunctionGrid();
                     return true;
                 case R.id.navigation_now_playing:
+                    progressBar.setVisibility(View.VISIBLE);
                     MOVIE_URL="https://api.themoviedb.org/3/movie/now_playing?api_key="+getResources().getString(R.string.API_key);
                     doFunctionGrid();
                     return true;
                 case R.id.navigation_up_coming:
+                    progressBar.setVisibility(View.VISIBLE);
                     MOVIE_URL="https://api.themoviedb.org/3/movie/upcoming?api_key="+getResources().getString(R.string.API_key);
                     doFunctionGrid();
                     return true;
