@@ -5,7 +5,7 @@
 Submission for Android NanoDegree Project
 
 ## Contents
-**#1 [Movie Feast](https://github.com/SyamSundarKirubakaran/Popular-Movies-Stage-II)** 
+**#1 [Movie Feast - II](https://github.com/SyamSundarKirubakaran/Popular-Movies-Stage-II)** 
 - Nano Degree Submission - Popular Movies Stage II
 
 ## Preliminary works
@@ -42,7 +42,7 @@ Get your API key and place it in the strings.xml file in the resource directory.
 ``` xml
 <string name="API_Key">Your API Key</string>
 ```
-**Show case:**<br />
+## Show case:
 <img src="assert/popular.png" height=480 width =270 />
 <img src="assert/top_rated.png" height=480 width =270 />
 <img src="assert/now_playing.png" height=480 width =270 />
@@ -54,7 +54,7 @@ Get your API key and place it in the strings.xml file in the resource directory.
 <img src="assert/add_fav.png" height=480 width =270 />
 <img src="assert/fav.png" height=480 width =270 />
 <img src="assert/rem_fav.png" height=480 width =270 /><br />
-**In absence of Network:**<br />
+## In absence of Network:
 <img src="assert/no_network.png" height=480 width =270 />
 <img src="assert/fav_full.png" height=480 width =270 />
 
