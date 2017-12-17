@@ -4,10 +4,12 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
@@ -18,6 +20,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,7 +71,6 @@ public class DetailedActivity extends AppCompatActivity {
         final FloatingActionButton fab2 = findViewById(R.id.fab1);
         final FloatingActionButton fab1 = findViewById(R.id.fab);
 
-
         String gotPosition=getIntent().getStringExtra("position");
         intGotPosition=Integer.parseInt(gotPosition);
 
@@ -91,8 +94,6 @@ public class DetailedActivity extends AppCompatActivity {
         }else{
             fab2.setImageDrawable(ContextCompat.getDrawable(DetailedActivity.this,R.drawable.ic_favorite_border_white_24px));
         }
-
-
 
 
         ImageView toolbarImage =  findViewById(R.id.image_id);
@@ -245,6 +246,5 @@ public class DetailedActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 }

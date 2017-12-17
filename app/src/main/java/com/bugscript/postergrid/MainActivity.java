@@ -112,28 +112,33 @@ public class MainActivity extends AppCompatActivity {
                 if (savedInstanceState.containsKey(LIFE_CYCLE_CALLBACKS)) {
                     String allPreviousLifecycleCallbacks = savedInstanceState
                             .getString(LIFE_CYCLE_CALLBACKS);
-                    int gotID=Integer.parseInt(allPreviousLifecycleCallbacks);
-                    switch (gotID) {
-                        case 2131230838:
-                            progressBar.setVisibility(View.VISIBLE);
-                            MOVIE_URL="https://api.themoviedb.org/3/movie/popular?api_key="+getResources().getString(R.string.API_key);
-                            doFunctionGrid();
-                            break;
-                        case 2131230839:
-                            progressBar.setVisibility(View.VISIBLE);
-                            MOVIE_URL="https://api.themoviedb.org/3/movie/top_rated?api_key="+getResources().getString(R.string.API_key);
-                            doFunctionGrid();
-                            break;
-                        case 2131230837:
-                            progressBar.setVisibility(View.VISIBLE);
-                            MOVIE_URL="https://api.themoviedb.org/3/movie/now_playing?api_key="+getResources().getString(R.string.API_key);
-                            doFunctionGrid();
-                            break;
-                        case 2131230840:
-                            progressBar.setVisibility(View.VISIBLE);
-                            MOVIE_URL="https://api.themoviedb.org/3/movie/upcoming?api_key="+getResources().getString(R.string.API_key);
-                            doFunctionGrid();
-                            break;
+                    if(allPreviousLifecycleCallbacks.equals("null")) {
+                        MOVIE_URL = "https://api.themoviedb.org/3/movie/popular?api_key=" + getResources().getString(R.string.API_key);
+                        doFunctionGrid();
+                    }else {
+                        int gotID = Integer.parseInt(allPreviousLifecycleCallbacks);
+                        switch (gotID) {
+                            case 2131230839:
+                                progressBar.setVisibility(View.VISIBLE);
+                                MOVIE_URL = "https://api.themoviedb.org/3/movie/popular?api_key=" + getResources().getString(R.string.API_key);
+                                doFunctionGrid();
+                                break;
+                            case 2131230840:
+                                progressBar.setVisibility(View.VISIBLE);
+                                MOVIE_URL = "https://api.themoviedb.org/3/movie/top_rated?api_key=" + getResources().getString(R.string.API_key);
+                                doFunctionGrid();
+                                break;
+                            case 2131230838:
+                                progressBar.setVisibility(View.VISIBLE);
+                                MOVIE_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=" + getResources().getString(R.string.API_key);
+                                doFunctionGrid();
+                                break;
+                            case 2131230841:
+                                progressBar.setVisibility(View.VISIBLE);
+                                MOVIE_URL = "https://api.themoviedb.org/3/movie/upcoming?api_key=" + getResources().getString(R.string.API_key);
+                                doFunctionGrid();
+                                break;
+                        }
                     }
                 }
             }
