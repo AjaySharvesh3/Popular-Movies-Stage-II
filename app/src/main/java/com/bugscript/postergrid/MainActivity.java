@@ -38,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
     public static String[] poster;
     public static String[] backdrop;
     public static String[] id;
+    public static String last_item;
     private String MOVIE_URL;
+    private static final String LIFE_CYCLE_CALLBACKS="callbacks";
     private URL url;
     private ProgressBar progressBar;
     private GridView gridview;
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            last_item=item.getItemId()+"";
             switch (item.getItemId()) {
                 case R.id.navigation_popular:
                     progressBar.setVisibility(View.VISIBLE);
@@ -76,6 +79,12 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        String savedMenuItem=last_item;
+        outState.putString(LIFE_CYCLE_CALLBACKS,savedMenuItem+"");
+    }
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -99,9 +108,40 @@ public class MainActivity extends AppCompatActivity {
         if(isNetworkAvailable()) {
             MOVIE_URL = "https://api.themoviedb.org/3/movie/popular?api_key=" + getResources().getString(R.string.API_key);
             doFunctionGrid();
+            if (savedInstanceState != null) {
+                if (savedInstanceState.containsKey(LIFE_CYCLE_CALLBACKS)) {
+                    String allPreviousLifecycleCallbacks = savedInstanceState
+                            .getString(LIFE_CYCLE_CALLBACKS);
+                    int gotID=Integer.parseInt(allPreviousLifecycleCallbacks);
+                    switch (gotID) {
+                        case 2131230838:
+                            progressBar.setVisibility(View.VISIBLE);
+                            MOVIE_URL="https://api.themoviedb.org/3/movie/popular?api_key="+getResources().getString(R.string.API_key);
+                            doFunctionGrid();
+                            break;
+                        case 2131230839:
+                            progressBar.setVisibility(View.VISIBLE);
+                            MOVIE_URL="https://api.themoviedb.org/3/movie/top_rated?api_key="+getResources().getString(R.string.API_key);
+                            doFunctionGrid();
+                            break;
+                        case 2131230837:
+                            progressBar.setVisibility(View.VISIBLE);
+                            MOVIE_URL="https://api.themoviedb.org/3/movie/now_playing?api_key="+getResources().getString(R.string.API_key);
+                            doFunctionGrid();
+                            break;
+                        case 2131230840:
+                            progressBar.setVisibility(View.VISIBLE);
+                            MOVIE_URL="https://api.themoviedb.org/3/movie/upcoming?api_key="+getResources().getString(R.string.API_key);
+                            doFunctionGrid();
+                            break;
+                    }
+                }
+            }
         }else {
+            progressBar.setVisibility(View.INVISIBLE);
             Toast.makeText(MainActivity.this,"Network Error..",Toast.LENGTH_LONG).show();
         }
+
     }
 
     public void doFunctionGrid(){

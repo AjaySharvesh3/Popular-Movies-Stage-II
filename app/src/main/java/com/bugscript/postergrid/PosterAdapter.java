@@ -23,7 +23,7 @@ public class PosterAdapter extends BaseAdapter {
 
 
     public int getCount() {
-        return MainActivity.poster.length;
+        return (MainActivity.poster!=null)?MainActivity.poster.length:0;
     }
 
 

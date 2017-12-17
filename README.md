@@ -29,7 +29,8 @@ An app that uses the [Movies.db API](https://www.themoviedb.org/?language=en) to
 * Working with URIs
 * Using share Intent
 * Handle Requests in absence of network
-* Offline Storage of favorite movies<br />
+* Offline Storage of favorite movies
+* Bug fix<br />
 
 **Popular movies in the form of JSON:** <br />
 <br />
@@ -48,6 +49,7 @@ Get your API key and place it in the strings.xml file in the resource directory.
 <img src="assert/now_playing.png" height=480 width =270 />
 <img src="assert/up_coming.png" height=480 width =270 />
 <img src="assert/overview.png" height=480 width =270 />
+<img src="assert/pre_video.png" height=480 width =270 />
 <img src="assert/youtube.png" height=480 width =270 />
 <img src="assert/share.png" height=480 width =270 />
 <img src="assert/empty_fav.png" height=480 width =270 />

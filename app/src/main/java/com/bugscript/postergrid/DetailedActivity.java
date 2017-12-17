@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bugscript.postergrid.Utilities.NetworkUtils;
+import com.bugscript.postergrid.Videos.VideoActivity;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -43,7 +44,8 @@ public class DetailedActivity extends AppCompatActivity {
     private int totalLenght;
     public static String[] authors=new String[100];
     public static String[] content=new String[100];
-    public static String key=null;
+    public static String[] keys;
+    public static String[] video_name;
     private int flag=0;
     public static MoviesDB mdb = new MoviesDB();
 
@@ -111,7 +113,8 @@ public class DetailedActivity extends AppCompatActivity {
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v="+key)));
+                Intent i=new Intent(DetailedActivity.this, VideoActivity.class);
+                startActivity(i);
             }
         });
 
@@ -187,12 +190,18 @@ public class DetailedActivity extends AppCompatActivity {
                 try{
                     JSONObject JO=new JSONObject(video);
                     JSONArray JA= JO.getJSONArray("results");
-                    key=JA.getJSONObject(0).getString("key");
+                    keys=new String[JA.length()];
+                    video_name=new String[JA.length()];
+                    for (int i=0;i<=JA.length();i++){
+                        keys[i]=JA.getJSONObject(i).getString("key");
+                        video_name[i]=JA.getJSONObject(i).getString("name");
+                    }
                 }catch (JSONException e){
                     e.printStackTrace();
                 }
 
             }catch(Exception e) {
+
             }
 
             return review;

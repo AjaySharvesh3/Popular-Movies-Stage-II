@@ -38,9 +38,12 @@
             android:name=".FavoriteActivity"
             android:label="Favorites"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".FavoriteDetails"
-            android:parentActivityName=".FavoriteActivity"
-            android:label="Favorites"></activity>
+        <activity
+            android:name=".FavoriteDetails"
+            android:label="Favorites"
+            android:parentActivityName=".FavoriteActivity" />
+        <activity android:name=".Videos.VideoActivity"
+            android:label="Movie Videos"></activity>
     </application>
 
 </manifest>
