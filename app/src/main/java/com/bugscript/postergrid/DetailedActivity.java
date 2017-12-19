@@ -65,12 +65,15 @@ public class DetailedActivity extends AppCompatActivity {
         outState.putIntArray("SCROLL_POSITION",
                 new int[]{ nestedScrollView.getScrollX(), nestedScrollView.getScrollY()});
     }
-
-    //TODO:adjust for 0 and -1 for x and y respectively
+    
 
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        appBarLayout.setExpanded(false);
+        if(scrollX==0 && scrollY==0){
+            appBarLayout.setExpanded(true);
+        }else {
+            appBarLayout.setExpanded(false);
+        }
         final int[] position = savedInstanceState.getIntArray("SCROLL_POSITION");
         if(position != null)
             nestedScrollView.post(new Runnable() {
