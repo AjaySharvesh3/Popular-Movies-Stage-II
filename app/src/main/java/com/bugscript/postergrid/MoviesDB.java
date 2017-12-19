@@ -72,6 +72,14 @@ public class MoviesDB {
                 cursor.moveToNext();
             }
             cursor.close();
+        }else{
+            fav_id=null;
+            fav_backdrop=null;
+            fav_dates=null;
+            fav_movies=null;
+            fav_poster=null;
+            fav_summary=null;
+            fav_votes=null;
         }
     }
 

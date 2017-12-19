@@ -9,11 +9,14 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.NestedScrollingParent;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -52,8 +55,30 @@ public class DetailedActivity extends AppCompatActivity {
     public static String[] video_name;
     private int flag=0;
     public static MoviesDB mdb = new MoviesDB();
+    public static int scrollX = 0;
+    public static int scrollY = -1;
+    public static NestedScrollView nestedScrollView;
+    public static AppBarLayout appBarLayout;
 
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putIntArray("SCROLL_POSITION",
+                new int[]{ nestedScrollView.getScrollX(), nestedScrollView.getScrollY()});
+    }
 
+    //TODO:adjust for 0 and -1 for x and y respectively
+
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        appBarLayout.setExpanded(false);
+        final int[] position = savedInstanceState.getIntArray("SCROLL_POSITION");
+        if(position != null)
+            nestedScrollView.post(new Runnable() {
+                public void run() {
+                    nestedScrollView.scrollTo(position[0], position[1]);
+                }
+            });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +95,8 @@ public class DetailedActivity extends AppCompatActivity {
         movieReview= findViewById(R.id.movieReviewValue);
         final FloatingActionButton fab2 = findViewById(R.id.fab1);
         final FloatingActionButton fab1 = findViewById(R.id.fab);
+        nestedScrollView=findViewById(R.id.nested);
+        appBarLayout=findViewById(R.id.app_bar);
 
         String gotPosition=getIntent().getStringExtra("position");
         intGotPosition=Integer.parseInt(gotPosition);
@@ -221,6 +248,24 @@ public class DetailedActivity extends AppCompatActivity {
                 movieReview.setText(temp+"");
             }
         }
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        scrollX = nestedScrollView.getScrollX();
+        scrollY = nestedScrollView.getScrollY();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        nestedScrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                nestedScrollView.scrollTo(scrollX, scrollY);
+            }
+        });
     }
 
     @Override

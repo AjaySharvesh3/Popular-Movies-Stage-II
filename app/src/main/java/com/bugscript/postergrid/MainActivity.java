@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressbar);
         contentResolver = MainActivity.this.getContentResolver();
         DetailedActivity.mdb.getFavoriteMovies(contentResolver);
+        gridview = findViewById(R.id.gridview);
 
         if(isNetworkAvailable()) {
             MOVIE_URL = "https://api.themoviedb.org/3/movie/popular?api_key=" + getResources().getString(R.string.API_key);
@@ -166,25 +167,25 @@ public class MainActivity extends AppCompatActivity {
             String MovieResults = null;
             try {
                 MovieResults = NetworkUtils.getResponseFromHttpUrl(searchUrl);
-                try{
-                    JSONObject JO=new JSONObject(MovieResults);
-                    JSONArray JA= JO.getJSONArray("results");
-                    movies=new String[JA.length()];
-                    votes=new String[JA.length()];
-                    dates=new String[JA.length()];
-                    summary=new String[JA.length()];
-                    poster=new String[JA.length()];
-                    backdrop=new String[JA.length()];
-                    id=new String[JA.length()];
-                    for(int i=0;i<=JA.length();i++){
-                        JSONObject Jinside=JA.getJSONObject(i);
-                        movies[i]=Jinside.getString("title");
-                        votes[i]=Jinside.getString("vote_average");
-                        dates[i]=Jinside.getString("release_date");
-                        summary[i]=Jinside.getString("overview");
-                        poster[i]=Jinside.getString("poster_path");
-                        backdrop[i]=Jinside.getString("backdrop_path");
-                        id[i]=Jinside.getString("id");
+                try {
+                    JSONObject JO = new JSONObject(MovieResults);
+                    JSONArray JA = JO.getJSONArray("results");
+                    movies = new String[JA.length()];
+                    votes = new String[JA.length()];
+                    dates = new String[JA.length()];
+                    summary = new String[JA.length()];
+                    poster = new String[JA.length()];
+                    backdrop = new String[JA.length()];
+                    id = new String[JA.length()];
+                    for (int i = 0; i <= JA.length(); i++) {
+                        JSONObject Jinside = JA.getJSONObject(i);
+                        movies[i] = Jinside.getString("title");
+                        votes[i] = Jinside.getString("vote_average");
+                        dates[i] = Jinside.getString("release_date");
+                        summary[i] = Jinside.getString("overview");
+                        poster[i] = Jinside.getString("poster_path");
+                        backdrop[i] = Jinside.getString("backdrop_path");
+                        id[i] = Jinside.getString("id");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -202,7 +203,6 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             progressBar.setVisibility(View.INVISIBLE);
-            gridview = findViewById(R.id.gridview);
             int orientation = getResources().getConfiguration().orientation;
             gridview.setNumColumns(orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2);
             gridview.setAdapter(new PosterAdapter(MainActivity.this));
@@ -210,8 +210,8 @@ public class MainActivity extends AppCompatActivity {
             gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v,
                                         int position, long id) {
-                    Intent i=new Intent(MainActivity.this,DetailedActivity.class);
-                    i.putExtra("position",position+"");
+                    Intent i = new Intent(MainActivity.this, DetailedActivity.class);
+                    i.putExtra("position", position + "");
                     startActivity(i);
                 }
 
