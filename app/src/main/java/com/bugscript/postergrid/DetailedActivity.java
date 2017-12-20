@@ -65,7 +65,7 @@ public class DetailedActivity extends AppCompatActivity {
         outState.putIntArray("SCROLL_POSITION",
                 new int[]{ nestedScrollView.getScrollX(), nestedScrollView.getScrollY()});
     }
-    
+
 
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);

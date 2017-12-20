@@ -42,9 +42,11 @@ public class MainActivity extends AppCompatActivity {
     private String MOVIE_URL;
     private static final String LIFE_CYCLE_CALLBACKS="callbacks";
     private URL url;
+    private static final String GRID_VIEW_POSITION="gridviewPos";
     private ProgressBar progressBar;
     private GridView gridview;
     public static ContentResolver contentResolver;
+    public int gridPos = -1;
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -84,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         String savedMenuItem=last_item;
         outState.putString(LIFE_CYCLE_CALLBACKS,savedMenuItem+"");
+        outState.putInt(GRID_VIEW_POSITION, gridview.getFirstVisiblePosition());
     }
 
     private boolean isNetworkAvailable() {
@@ -113,10 +116,10 @@ public class MainActivity extends AppCompatActivity {
                 if (savedInstanceState.containsKey(LIFE_CYCLE_CALLBACKS)) {
                     String allPreviousLifecycleCallbacks = savedInstanceState
                             .getString(LIFE_CYCLE_CALLBACKS);
-                    if(allPreviousLifecycleCallbacks.equals("null")) {
+                    if (allPreviousLifecycleCallbacks.equals("null")) {
                         MOVIE_URL = "https://api.themoviedb.org/3/movie/popular?api_key=" + getResources().getString(R.string.API_key);
                         doFunctionGrid();
-                    }else {
+                    } else {
                         int gotID = Integer.parseInt(allPreviousLifecycleCallbacks);
                         switch (gotID) {
                             case 2131230839:
@@ -141,6 +144,8 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                         }
                     }
+                }else if(savedInstanceState.containsKey(GRID_VIEW_POSITION)){
+                    gridPos = savedInstanceState.getInt(GRID_VIEW_POSITION);
                 }
             }
         }else {
@@ -191,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -216,6 +220,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             });
+            if (gridPos > -1)
+                gridview.setSelection(gridPos);
         }
     }
 
