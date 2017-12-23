@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private GridView gridview;
     public static ContentResolver contentResolver;
-    public int gridPos = -1;
+    private int gridPos = -1;
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -60,21 +60,25 @@ public class MainActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.VISIBLE);
                     MOVIE_URL="https://api.themoviedb.org/3/movie/popular?api_key="+getResources().getString(R.string.API_key);
                     doFunctionGrid();
+                    gridPos = -1;
                     return true;
                 case R.id.navigation_top_rated:
                     progressBar.setVisibility(View.VISIBLE);
                     MOVIE_URL="https://api.themoviedb.org/3/movie/top_rated?api_key="+getResources().getString(R.string.API_key);
                     doFunctionGrid();
+                    gridPos = -1;
                     return true;
                 case R.id.navigation_now_playing:
                     progressBar.setVisibility(View.VISIBLE);
                     MOVIE_URL="https://api.themoviedb.org/3/movie/now_playing?api_key="+getResources().getString(R.string.API_key);
                     doFunctionGrid();
+                    gridPos = -1;
                     return true;
                 case R.id.navigation_up_coming:
                     progressBar.setVisibility(View.VISIBLE);
                     MOVIE_URL="https://api.themoviedb.org/3/movie/upcoming?api_key="+getResources().getString(R.string.API_key);
                     doFunctionGrid();
+                    gridPos = -1;
                     return true;
             }
             return false;
@@ -126,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                                 progressBar.setVisibility(View.VISIBLE);
                                 MOVIE_URL = "https://api.themoviedb.org/3/movie/popular?api_key=" + getResources().getString(R.string.API_key);
                                 doFunctionGrid();
+
                                 break;
                             case 2131230840:
                                 progressBar.setVisibility(View.VISIBLE);
@@ -144,7 +149,8 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                         }
                     }
-                }else if(savedInstanceState.containsKey(GRID_VIEW_POSITION)){
+                }
+                if(savedInstanceState.containsKey(GRID_VIEW_POSITION)){
                     gridPos = savedInstanceState.getInt(GRID_VIEW_POSITION);
                 }
             }
@@ -207,8 +213,6 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             progressBar.setVisibility(View.INVISIBLE);
-            int orientation = getResources().getConfiguration().orientation;
-            gridview.setNumColumns(orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2);
             gridview.setAdapter(new PosterAdapter(MainActivity.this));
             gridview.setVisibility(View.VISIBLE);
             gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

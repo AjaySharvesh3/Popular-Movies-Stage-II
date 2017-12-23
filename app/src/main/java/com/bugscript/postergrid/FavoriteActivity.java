@@ -11,6 +11,14 @@ import android.widget.GridView;
 public class FavoriteActivity extends AppCompatActivity {
 
     GridView favoriteGridView;
+    private static final String GRID_VIEW_POSITION="gridviewPos";
+    private int gridPos = -1;
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(GRID_VIEW_POSITION, favoriteGridView.getFirstVisiblePosition());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +32,6 @@ public class FavoriteActivity extends AppCompatActivity {
         }
 
         if(MoviesDB.fav_poster!=null) {
-            int orientation = getResources().getConfiguration().orientation;
-            favoriteGridView.setNumColumns(orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2);
             favoriteGridView.setAdapter(new FavoriteAdapter(FavoriteActivity.this));
             favoriteGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v,
@@ -36,6 +42,8 @@ public class FavoriteActivity extends AppCompatActivity {
                 }
 
             });
+            if (gridPos > -1)
+                favoriteGridView.setSelection(gridPos);
         }else{
             favoriteGridView.setVisibility(View.INVISIBLE);
         }
